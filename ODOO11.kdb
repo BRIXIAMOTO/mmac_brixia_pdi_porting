@@ -5,8 +5,8 @@
     <access>Native</access>
     <database>Brixiamoto</database>
     <port>5432</port>
-    <username>odoo</username>
-    <password>Encrypted </password>
+    <username>brixia</username>
+    <password>Encrypted 2be98afc86aa7c0a6b910b679dfc7f99b</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
