@@ -407,7 +407,7 @@
       <offset>0.0</offset>
       <maxdiff>0.0</maxdiff>
     </maxdate>
-    <size_rowset>400000</size_rowset>
+    <size_rowset>450000</size_rowset>
     <sleep_time_empty>50</sleep_time_empty>
     <sleep_time_full>50</sleep_time_full>
     <unique_connections>N</unique_connections>
@@ -429,7 +429,7 @@
     <created_user>-</created_user>
     <created_date>2018/10/23 09:49:39.861</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2018/11/20 17:39:30.308</modified_date>
+    <modified_date>2018/11/20 17:51:29.907</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -594,11 +594,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Stream lookup</from>
-      <to>Database lookup 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Split field to rows</from>
       <to>Stream lookup</to>
       <enabled>Y</enabled>
@@ -609,7 +604,7 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>New</from>
+      <from>Stream lookup</from>
       <to>product_template_out</to>
       <enabled>Y</enabled>
     </hop>
