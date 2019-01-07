@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>t_anagrafiche_product_template</name>
+    <name>t_anagrafiche_product_product</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -429,7 +429,7 @@
     <created_user>-</created_user>
     <created_date>2018/10/23 09:49:39.861</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2018/12/20 14:54:47.419</modified_date>
+    <modified_date>2018/12/20 14:52:51.654</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -539,18 +539,190 @@
   </connection>
   <order>
     <hop>
-      <from>product_template_in</from>
-      <to>String operations</to>
+      <from>Database lookup</from>
+      <to>Database lookup 3</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>String operations</from>
-      <to>product_template_out</to>
+      <from>Database lookup 3</from>
+      <to>Filter rows 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter rows 2</from>
+      <to>product_product_out</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter rows 2</from>
+      <to>Dummy (do nothing) 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>product_product</from>
+      <to>String operations 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>String operations 2</from>
+      <to>Database lookup</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>String operations</name>
+    <name>Database lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>ODOO11</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>product_template</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>Y</eat_row_on_failure>
+      <key>
+        <name>product_tmpl_id</name>
+        <field>id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>id</name>
+        <rename>check</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>368</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Database lookup 3</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>ODOO11</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>product_product</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>id</name>
+        <field>id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>id</name>
+        <rename>check_pr</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Dummy (do nothing) 2</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>608</xloc>
+      <yloc>240</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter rows 2</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to>product_product_out</send_true_to>
+    <send_false_to>Dummy (do nothing) 2</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>check_pr</leftvalue>
+        <function>IS NULL</function>
+        <rightvalue/>
+      </condition>
+    </compare>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>608</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>String operations 2</name>
     <type>StringOperations</type>
     <description/>
     <distribute>Y</distribute>
@@ -562,7 +734,7 @@
     </partitioning>
     <fields>
       <field>
-        <in_stream_name>name</in_stream_name>
+        <in_stream_name>default_code</in_stream_name>
         <out_stream_name/>
         <trim_type>none</trim_type>
         <lower_upper>none</lower_upper>
@@ -575,7 +747,7 @@
         <remove_special_characters>crlf</remove_special_characters>
       </field>
       <field>
-        <in_stream_name>name</in_stream_name>
+        <in_stream_name>default_code</in_stream_name>
         <out_stream_name/>
         <trim_type>none</trim_type>
         <lower_upper>none</lower_upper>
@@ -596,13 +768,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>240</xloc>
-      <yloc>48</yloc>
+      <xloc>224</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>product_template_in</name>
+    <name>product_product</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -615,124 +787,26 @@
     <connection>ODOO8</connection>
     <sql>SELECT
   input.id
-, warranty
-, uos_id
-, list_price
-, weight
-, color
-, 1 as write_uid
-, mes_type
-, uom_id
-, description_purchase
+, ean13
 , create_date
-, uos_coeff
+, default_code
+, name_template
 , 1 as create_uid
-, sale_ok
-, categ_id
-, product_manager
 , message_last_post
-, company_id
-, "state"
-, uom_po_id
-, description_sale
-, description
-, weight_net
-, volume
+, product_tmpl_id
+, 1 as write_uid
 , write_date
 , active
-, rental
-, input."name"
-, 'product' as "type"
-, website_meta_title
-, website_published
-, website_meta_description
-, website_description
-, website_size_x
-, website_size_y
-, website_meta_keywords
-, website_sequence
-, image_small_attachment_id
-, image_medium_attachment_id
-, image_attachment_id
-, image
-, image_medium
-, image_small
-, mmac_stock
-, mmac_classificazione
-, mmac_descrizione_breve
-, mmac_product_name
-, mmac_brand
-, mmac_url_image
-, loc_rack
-, loc_row
-, loc_case
-, track_all
-, track_incoming
-, sale_delay
-, track_outgoing
-, purchase_ok
-, x_fornitore
-, x_partner
-, mmac_stock_int
-, mmac_partner
-, mmac_cash_on_delivery
-, mmac_ebay_titolo
-, mmac_ebay_prezzo
-, mmac_ebay_spedinclusa
-, mmac_ebay_descrizione
-, mmac_ebay_pubblica
-, mmac_magento_categoria_id
-, mmac_ubicazione_int
-, mmac_ean
-, mmac_date_rev_price
-, mmac_notetecniche
-, mmac_riforiginale
-, mmac_amz_pubblica
-, mmac_amz_prezzo
-, mmac_alternativo
-, mmac_magento_catauto_id
-, mmac_magento_catbici_id
-, mmac_larghezza
-, mmac_lunghezza
-, mmac_altezza
-, mmac_ebay_primoprezzo
-, mmac_ebay_costispedit
-, mmac_costo
-, mmac_listino
-, mmac_amz_spedinclusa
-, mmac_amz_asin
-, mmac_prezzo_promo
-, mmac_tipo_promo
-, mmac_prezzo_scontato
-, mmac_amz_prezzo_min
-, mmac_amz_prezzo_max
-, mmac_amz_floating
-, mmac_sconto_fornitore
-, mmac_sku_breve
-, mmac_amz_forzachiusura
-, mmac_amz_repricerule
-, mmac_ebay_prezzo_forzato
-, mmac_ebay_sconto_forzato
-, mmac_ebay_nonvenduti
-, mmac_alias
-, 'none' as tracking
-, 'no-message' as sale_line_warn
-, 'manual' as service_type
-, 'no' as expense_policy
-, 'order' as invoice_policy
-,'receive' as purchase_method
-, 'no-message' as purchase_line_warn 
-, substring(name,1,2) as product_prefix
-FROM product_template as input
-left join mmac_tmp_odoo11_porting as inv on input.id = inv.id
+, image_variant_attachment_id
+, image_variant
+FROM product_product as input
+left join mmac_tmp_odoo11_porting_prodprod as inv on input.id = inv.id
+inner join mmac_tmp_odoo11_porting as portin on input.product_tmpl_id = portin.id
  where 
-inv.id is null and
-(substring(name,3,1)='-' or 
-substring(name,4,1)='-')
-and name not like '*%'
-
-order by random()</sql>
-    <limit>100000</limit>
+inv.id is null
+-- and 1=2
+order by product_tmpl_id</sql>
+    <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
     <variables_active>N</variables_active>
@@ -746,12 +820,12 @@ order by random()</sql>
     </remotesteps>
     <GUI>
       <xloc>96</xloc>
-      <yloc>48</yloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>product_template_out</name>
+    <name>product_product_out</name>
     <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
@@ -762,11 +836,11 @@ order by random()</sql>
       <schema_name/>
     </partitioning>
     <connection>ODOO11</connection>
-    <commit>200</commit>
-    <update_bypassed>Y</update_bypassed>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
     <lookup>
       <schema/>
-      <table>product_template</table>
+      <table>product_product</table>
       <key>
         <name>id</name>
         <field>id</field>
@@ -779,38 +853,8 @@ order by random()</sql>
         <update>N</update>
       </value>
       <value>
-        <name>name</name>
-        <rename>name</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>list_price</name>
-        <rename>list_price</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>weight</name>
-        <rename>weight</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>color</name>
-        <rename>color</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>write_uid</name>
-        <rename>write_uid</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>uom_id</name>
-        <rename>uom_id</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>description_purchase</name>
-        <rename>description_purchase</rename>
+        <name>barcode</name>
+        <rename>ean13</rename>
         <update>N</update>
       </value>
       <value>
@@ -819,48 +863,23 @@ order by random()</sql>
         <update>N</update>
       </value>
       <value>
+        <name>default_code</name>
+        <rename>default_code</rename>
+        <update>N</update>
+      </value>
+      <value>
         <name>create_uid</name>
         <rename>create_uid</rename>
         <update>N</update>
       </value>
       <value>
-        <name>sale_ok</name>
-        <rename>sale_ok</rename>
+        <name>product_tmpl_id</name>
+        <rename>product_tmpl_id</rename>
         <update>N</update>
       </value>
       <value>
-        <name>categ_id</name>
-        <rename>categ_id</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>message_last_post</name>
-        <rename>message_last_post</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>company_id</name>
-        <rename>company_id</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>uom_po_id</name>
-        <rename>uom_po_id</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>description_sale</name>
-        <rename>description_sale</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>description</name>
-        <rename>description</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>volume</name>
-        <rename>volume</rename>
+        <name>write_uid</name>
+        <rename>write_uid</rename>
         <update>N</update>
       </value>
       <value>
@@ -874,309 +893,9 @@ order by random()</sql>
         <update>N</update>
       </value>
       <value>
-        <name>rental</name>
-        <rename>rental</rename>
+        <name>message_last_post</name>
+        <rename>message_last_post</rename>
         <update>N</update>
-      </value>
-      <value>
-        <name>type</name>
-        <rename>type</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_partner</name>
-        <rename>mmac_partner</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_brand</name>
-        <rename>mmac_brand</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_product_name</name>
-        <rename>mmac_product_name</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_url_image</name>
-        <rename>mmac_url_image</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_stock</name>
-        <rename>mmac_stock</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_lunghezza</name>
-        <rename>mmac_lunghezza</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_altezza</name>
-        <rename>mmac_altezza</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_alias</name>
-        <rename>mmac_alias</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_sku_breve</name>
-        <rename>mmac_sku_breve</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_larghezza</name>
-        <rename>mmac_larghezza</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>sale_delay</name>
-        <rename>sale_delay</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>default_code</name>
-        <rename>name</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>responsible_id</name>
-        <rename>write_uid</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>tracking</name>
-        <rename>tracking</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>sale_line_warn</name>
-        <rename>sale_line_warn</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>service_type</name>
-        <rename>service_type</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>expense_policy</name>
-        <rename>expense_policy</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>invoice_policy</name>
-        <rename>invoice_policy</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_stock_int</name>
-        <rename>mmac_stock_int</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_cash_on_delivery</name>
-        <rename>mmac_cash_on_delivery</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_ebay_prezzo</name>
-        <rename>mmac_ebay_prezzo</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_ebay_spedinclusa</name>
-        <rename>mmac_ebay_spedinclusa</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_ebay_descrizione</name>
-        <rename>mmac_ebay_descrizione</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_ebay_pubblica</name>
-        <rename>mmac_ebay_pubblica</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_magento_categoria_id</name>
-        <rename>mmac_magento_categoria_id</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_ubicazione_int</name>
-        <rename>mmac_ubicazione_int</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_ean</name>
-        <rename>mmac_ean</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_date_rev_price</name>
-        <rename>mmac_date_rev_price</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_notetecniche</name>
-        <rename>mmac_notetecniche</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_riforiginale</name>
-        <rename>mmac_riforiginale</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_amz_pubblica</name>
-        <rename>mmac_amz_pubblica</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_amz_prezzo</name>
-        <rename>mmac_amz_prezzo</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_alternativo</name>
-        <rename>mmac_alternativo</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_magento_catauto_id</name>
-        <rename>mmac_magento_catauto_id</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_magento_catbici_id</name>
-        <rename>mmac_magento_catbici_id</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_ebay_primoprezzo</name>
-        <rename>mmac_ebay_primoprezzo</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_ebay_costispedit</name>
-        <rename>mmac_ebay_costispedit</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_listino</name>
-        <rename>mmac_listino</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_amz_spedinclusa</name>
-        <rename>mmac_amz_spedinclusa</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_amz_asin</name>
-        <rename>mmac_amz_asin</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_prezzo_promo</name>
-        <rename>mmac_prezzo_promo</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_tipo_promo</name>
-        <rename>mmac_tipo_promo</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_prezzo_scontato</name>
-        <rename>mmac_prezzo_scontato</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_amz_prezzo_min</name>
-        <rename>mmac_amz_prezzo_min</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_amz_prezzo_max</name>
-        <rename>mmac_amz_prezzo_max</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_amz_floating</name>
-        <rename>mmac_amz_floating</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_sconto_fornitore</name>
-        <rename>mmac_sconto_fornitore</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_amz_forzachiusura</name>
-        <rename>mmac_amz_forzachiusura</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_amz_repricerule</name>
-        <rename>mmac_amz_repricerule</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_ebay_prezzo_forzato</name>
-        <rename>mmac_ebay_prezzo_forzato</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_ebay_sconto_forzato</name>
-        <rename>mmac_ebay_sconto_forzato</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_ebay_nonvenduti</name>
-        <rename>mmac_ebay_nonvenduti</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>mmac_descrizione_breve</name>
-        <rename>mmac_descrizione_breve</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>mmac_classificazione</name>
-        <rename>mmac_classificazione</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>mmac_costo</name>
-        <rename>mmac_costo</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>weight_net</name>
-        <rename>weight_net</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>purchase_method</name>
-        <rename>purchase_method</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>purchase_line_warn</name>
-        <rename>purchase_line_warn</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>purchase_ok</name>
-        <rename>sale_ok</rename>
-        <update>Y</update>
       </value>
     </lookup>
     <cluster_schema/>
@@ -1187,8 +906,8 @@ order by random()</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>896</xloc>
-      <yloc>48</yloc>
+      <xloc>800</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
